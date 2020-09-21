@@ -86,10 +86,6 @@ module.exports = function(webpackEnv) {
         options: cssOptions,
       },
       {
-        loader: require.resolve('less-loader'),
-        options: lessOptions,
-      },
-      {
         // Options for PostCSS as we reference these options twice
         // Adds vendor prefixing based on your specified browser support in
         // package.json
@@ -114,6 +110,12 @@ module.exports = function(webpackEnv) {
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
       },
+      {
+        loader: require.resolve('less-loader'),
+        options: {
+          lessOptions,
+        }
+      },
     ].filter(Boolean);
     if (preProcessor) {
       loaders.push(
@@ -127,6 +129,11 @@ module.exports = function(webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: true,
+            modules: false,
+            modifyVars: {//修改ui库less变量
+              "@primary-color": "#f9c700"
+            },
+            javascriptEnabled: true,//启动js
           },
         }
       );
@@ -375,7 +382,7 @@ module.exports = function(webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
-                
+
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
@@ -388,6 +395,7 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  ['import', { libraryName: 'antd', style: true }]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -458,11 +466,11 @@ module.exports = function(webpackEnv) {
               }),
             },{
               test: lessRegex,
-              exclude: cssModuleRegex,
+              exclude: lessModuleRegex,
               use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
-              }),
+              },'less-loader'),
               sideEffects: true,
             },
             {
@@ -472,7 +480,7 @@ module.exports = function(webpackEnv) {
                 sourceMap: isEnvProduction && shouldUseSourceMap,
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
-              }),
+              },'less-loader'),
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the

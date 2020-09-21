@@ -1,6 +1,9 @@
 import React from 'react'
 import Child from './Child'
+import {Button,Input} from 'antd'
+
 import './index.less'
+
 
 export default class Lift extends React.Component{
 
@@ -27,12 +30,14 @@ export default class Lift extends React.Component{
     }
 
     render() {
-        let style = {
-            padding:50
-        }
+        // let style = {
+        //     padding:50
+        // }
         return <div className="content">
             <p>React生命周期</p>
             <button onClick={this.handleAdd}>点击一下</button>
+            <Input value="111111"></Input>
+            <Button onClick={this.handleClick.bind(this)}>AntD点击一下</Button>
             <button onClick={this.handleClick.bind(this)}>点击一下</button>
             <p>{this.state.count}</p>
             <Child name={this.state.count}></Child>
