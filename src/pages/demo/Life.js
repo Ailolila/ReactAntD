@@ -1,5 +1,6 @@
 import React from 'react'
 import Child from './Child'
+import './index.css'
 
 export default class Lift extends React.Component{
 
@@ -29,7 +30,7 @@ export default class Lift extends React.Component{
         let style = {
             padding:50
         }
-        return <div style={style}>
+        return <div className="content">
             <p>React生命周期</p>
             <button onClick={this.handleAdd}>点击一下</button>
             <button onClick={this.handleClick.bind(this)}>点击一下</button>
