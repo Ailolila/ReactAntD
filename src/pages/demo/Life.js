@@ -1,6 +1,6 @@
 import React from 'react'
 import Child from './Child'
-import './index.css'
+import './index.less'
 
 export default class Lift extends React.Component{
 
