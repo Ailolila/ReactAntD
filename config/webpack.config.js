@@ -130,7 +130,7 @@ module.exports = function(webpackEnv) {
           options: {
             sourceMap: true,
             modules: false,
-            modifyVars: {//修改ui库less变量
+            modifyVars: {//修改ui库less变量//git
               "@primary-color": "#f9c700"
             },
             javascriptEnabled: true,//启动js
