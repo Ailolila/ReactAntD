@@ -8,11 +8,36 @@ import {
     //LinkOutlined,
 } from '@ant-design/icons';
 import './index.less'
+import MenuConfig from './../../config/menuConfig'
 
 const { SubMenu } = Menu;
 
-
 export default class NavLeft extends React.Component {
+
+    componentWillMount() {
+        const menuTreeNode = this.renderMenu(MenuConfig);
+
+        this.setState({
+            menuTreeNode
+        })
+    }
+    //菜单渲染
+    renderMenu = (data) => {
+        return data.map((item) => {
+            if (item.children) {
+                return (
+                    <SubMenu title={item.title} key={item.key}>
+                        { this.renderMenu(item.children)}
+                    </SubMenu>
+                )
+            }
+            return <Menu.Item title={item.title} key={item.key}>
+                {item.title}
+            </Menu.Item>
+        })
+    }
+
+
 
     render() {
         return (
@@ -22,7 +47,8 @@ export default class NavLeft extends React.Component {
                     <h1>React练级demo</h1>
                 </div>
                 <Menu mode="inline" theme="dark">
-                    <SubMenu key="sub1" icon={<AppstoreOutlined />} title="导航一">
+                    {this.state.menuTreeNode}
+                    {/* <SubMenu key="sub1" icon={<AppstoreOutlined />} title="导航一">
                         <Menu.Item key="1" icon={<SettingOutlined />} >选项1</Menu.Item>
                         <Menu.Item key="2">选项2</Menu.Item>
                         <Menu.Item key="3">选项3</Menu.Item>
@@ -41,11 +67,10 @@ export default class NavLeft extends React.Component {
                         <Menu.Item key="10">选项10</Menu.Item>
                         <Menu.Item key="11">选项11</Menu.Item>
                         <Menu.Item key="12">选项12</Menu.Item>
-                    </SubMenu>
+                    </SubMenu> */}
                 </Menu>
             </div>
 
         );
     }
 }
-

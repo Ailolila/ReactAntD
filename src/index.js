@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import Life from './pages/demo/Life';
-import Admon from './admin'
+import Admin from './admin'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  //<React.StrictMode>
-    <Admon />,
-  //</React.StrictMode>,
+  <React.StrictMode>
+    <Admin />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
