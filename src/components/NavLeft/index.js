@@ -1,12 +1,12 @@
 import React from 'react'
 import { Menu } from 'antd';
-import {
-    MailOutlined,
-    //CalendarOutlined,
-    AppstoreOutlined,
-    SettingOutlined,
-    //LinkOutlined,
-} from '@ant-design/icons';
+// import {
+//     MailOutlined,
+//     CalendarOutlined,
+//     AppstoreOutlined,
+//     SettingOutlined,
+//     LinkOutlined,
+// } from '@ant-design/icons';
 import './index.less'
 import MenuConfig from './../../config/menuConfig'
 
