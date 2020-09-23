@@ -1,0 +1,22 @@
+前提：安装node.js
+
+1、创建脚手架
+npm install -g create-react-app
+create-react-app my-app
+
+cd my-app
+npm start
+
+2、安装react-router
+yarn add react-router
+
+3、启用项目
+yarn start
+
+4、插件
+暴露配置文件 yarn eject
+yarn add react-router-dom axios less-loader
+yarn add less@^2.7.3
+yarn add less-loader@5.0.0
+yarn add antd
+yarn add jsonp --save
