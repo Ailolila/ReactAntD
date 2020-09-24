@@ -2,7 +2,7 @@ import { Row, Col } from 'antd';
 import React from 'react';
 import './index.less';
 import Util from '../../utils/util';
-import axios from '../../axios'
+import axios from '../../axios/index'
 
 export default class Header extends React.Component {
 
@@ -36,6 +36,40 @@ export default class Header extends React.Component {
                 })
             }
         })
+
+        axios.ajax({
+            url: "/GetTest",
+            data: {
+                params: {
+
+                }
+            }
+        }).then((res) => {
+            debugger;
+            if (res.status == 'success') {
+                let data = res.results[0].weather_data[0];
+                this.setState({
+                    dayPictureUrl: data.dayPictureUrl,
+                    weather: data.weather
+                })
+            }
+        })
+
+        let data = { "code": "1234", "name": "yyyy" };
+        axios.ajaxPost({
+            url: "/PostTest",
+            data: data
+        }).then((res) => {
+            debugger;
+            if (res.status == 'success') {
+                let data = res.results[0].weather_data[0];
+                this.setState({
+                    dayPictureUrl: data.dayPictureUrl,
+                    weather: data.weather
+                })
+            }
+        })
+
     }
 
     render() {
