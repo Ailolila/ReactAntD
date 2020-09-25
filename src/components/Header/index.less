@@ -1,4 +1,7 @@
+@import './../../style/default.less';
+
 .header {
+    background-color: @colorM;
     .header-top {
         height: 60px;
         line-height: 60px;
@@ -14,7 +17,22 @@
         padding: 0 20px;
         border-top: 1px solid #f9c700;
         .breadcrumb-title {
-            text-align: center;
+            font-size: @fontC;
+            // text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            &:after{
+                position: absolute;
+                // width: 100px;
+                content: '';
+                // left: 90px;
+                 top: 39px;
+                border-top: 9px solid @colorM;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+            }
         }
         .weather {
             text-align: right;

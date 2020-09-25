@@ -2,7 +2,7 @@ import { Row, Col } from 'antd';
 import React from 'react';
 import './index.less';
 import Util from '../../utils/util';
-import axios from '../../axios/index'
+import axios from '../../axios/index';
 
 export default class Header extends React.Component {
 
@@ -60,12 +60,10 @@ export default class Header extends React.Component {
             url: "/PostTest",
             data: data
         }).then((res) => {
-            debugger;
-            if (res.status == 'success') {
-                let data = res.results[0].weather_data[0];
+            if (res.ResultCode == '200') {
+                let data = res.ResultValue.Data[0];
                 this.setState({
-                    dayPictureUrl: data.dayPictureUrl,
-                    weather: data.weather
+                    ActivityName: data.ActivityName
                 })
             }
         })
@@ -77,7 +75,7 @@ export default class Header extends React.Component {
             <div className="header">
                 <Row className="header-top">
                     <Col span="24">
-                        <span>欢迎，{this.state.userName}</span>
+                        <span>欢迎，{this.state.userName} {this.state.ActivityName}</span>
                         <a href="#">退出</a>
                     </Col>
                 </Row>

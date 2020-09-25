@@ -1,12 +1,20 @@
+@import './default.less';
+
 .container{
+    display: flex;
     .nav-left{
+        width: 15%;
         background-color:#001529;
         color: #ffffff;
         height: calc(100vh);
+        min-width: 220px;
     }
     .main{
+        //width: calc(~"100% - 30px");
+        // width: calc(100vh);
+        flex: 1;
         height: calc(100vh);
-        //background-color: @colorL;
+        background-color: @colorL;
         overflow: auto;
     }
     .content{
