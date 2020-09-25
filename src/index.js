@@ -5,7 +5,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import Life from './pages/demo/Life';
-import Admin from './admin';
+//import Admin from './admin';
+import Admin from './pages/route_demo/route1/Home';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
