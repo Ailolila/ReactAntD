@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default class Main extends React.Component {
+export default class Topic extends React.Component {
 
     render() {
         return (
             <div>
-                this is main js
+                this is topics js 3
             </div>
         );
     }
