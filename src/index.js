@@ -6,12 +6,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import Life from './pages/demo/Life';
 //import Admin from './admin';
-import Admin from './pages/route_demo/route1/Home';
+import Router from './pages/route_demo/route2/Router';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Admin />
+    <Router />
   </React.StrictMode>,
   document.getElementById('root')
 );

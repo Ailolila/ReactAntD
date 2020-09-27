@@ -12,7 +12,7 @@ export default class Home extends React.Component {
                 <div>
                     <ul>
                         <li>
-                            <Link to="/">Home</Link>
+                            <Link to="/main">Home</Link>
                         </li>
                         <li>
                             <Link to="/about">About</Link>
@@ -23,7 +23,7 @@ export default class Home extends React.Component {
                     </ul>
                     <hr />
                     <Switch>
-                        <Route exact={true} path="/" component={Main}></Route>
+                        <Route exact={true} path="/main" component={Main}></Route>
                         <Route path="/about" component={About}></Route>
                         <Route path="/topics" component={Topic}></Route>
                     </Switch>

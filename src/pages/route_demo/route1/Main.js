@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default class Main extends React.Component {
 
@@ -6,6 +7,9 @@ export default class Main extends React.Component {
         return (
             <div>
                 this is main js
+                <Link to="/main/a">AA</Link>
+                <hr/>
+                {this.props.children}
             </div>
         );
     }
