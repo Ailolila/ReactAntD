@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import Life from './pages/demo/Life';
 //import Admin from './admin';
-import Router from './pages/route_demo/route3/Router';
+import Router from './router';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Menu } from 'antd';
+import { NavLink } from 'react-router-dom';
 // import {
 //     MailOutlined,
 //     CalendarOutlined,
@@ -32,7 +33,7 @@ export default class NavLeft extends React.Component {
                 )
             }
             return <Menu.Item title={item.title} key={item.key}>
-                {item.title}
+                <NavLink to={item.key}>{item.title}</NavLink>
             </Menu.Item>
         })
     }
