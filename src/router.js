@@ -3,7 +3,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
 import Admin from './admin';
 import Login from './pages/login/login';
-import Buttons from './pages/ui/buttons/buttons';
+import Buttons from './pages/ui/buttons';
 import NoMatch from './pages/nomatch';
 
 export default class IRouter extends React.Component {
