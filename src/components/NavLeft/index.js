@@ -47,7 +47,8 @@ export default class NavLeft extends React.Component {
                     <img src="/assets/logo-ant.svg" alt=""></img>
                     <h1>React练级demo</h1>
                 </div>
-                <Menu mode="inline" theme="dark">
+                <Menu mode="inline" theme="dark" defaultSelectedKeys={['/']}
+                    defaultOpenKeys={['/ui']}>
                     {this.state.menuTreeNode}
                     {/* <SubMenu key="sub1" icon={<AppstoreOutlined />} title="导航一">
                         <Menu.Item key="1" icon={<SettingOutlined />} >选项1</Menu.Item>
