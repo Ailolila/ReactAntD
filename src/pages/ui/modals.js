@@ -23,10 +23,10 @@ export default class Modals extends React.Component {
             title: '确认',
             //icon: <ExclamationCircleOutlined />,
             content: '你确认你学会React了么',
-            onOk(){
+            onOk() {
                 console.log('OK');
             },
-            onCancel(){
+            onCancel() {
                 console.log('Cancel');
             }
         });
@@ -52,6 +52,11 @@ export default class Modals extends React.Component {
                     title="React"
                     visible={this.state.showModal1}
                     onCancel={() => {
+                        this.setState({
+                            showModal1: false
+                        })
+                    }}
+                    onOk={() => {
                         this.setState({
                             showModal1: false
                         })
