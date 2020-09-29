@@ -21,6 +21,7 @@ export default class Modals extends React.Component {
     handleConfirm = (type) => {
         Modal[type]({
             title: '确认',
+            //icon: <ExclamationCircleOutlined />,
             content: '你确认你学会React了么',
             onOk(){
                 console.log('OK');
@@ -45,6 +46,7 @@ export default class Modals extends React.Component {
                     <Button type="primary" onClick={() => this.handleConfirm('info')}>Info</Button>
                     <Button type="primary" onClick={() => this.handleConfirm('success')}>Success</Button>
                     <Button type="primary" onClick={() => this.handleConfirm('warning')}>Warring</Button>
+                    <Button type="primary" onClick={() => this.handleConfirm('error')}>error</Button>
                 </Card>
                 <Modal
                     title="React"
