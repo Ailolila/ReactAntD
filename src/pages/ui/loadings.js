@@ -29,12 +29,14 @@ export default class Loadings extends React.Component {
                         message="React"
                         description="欢迎来到我的练级世界"
                         type="error"
+                        style={{ margin: "10px 0" }}
                     />
                     <Spin>
                         <Alert
                             message="React"
                             description="欢迎来到我的练级世界"
                             type="error"
+                            style={{ marginBottom: 10 }}
                         />
                     </Spin>
                     <Spin indicator={<LoadingOutlined />} tip="加载中。。。">
