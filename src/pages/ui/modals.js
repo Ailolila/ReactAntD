@@ -86,7 +86,8 @@ export default class Modals extends React.Component {
                 </Modal>
                 <Modal
                     title="React"
-                    wrapClassName="vertical-center-modal"
+                    centered={true}
+                    //wrapClassName="vertical-center-modal"
                     visible={this.state.showModal4}
                     onCancel={() => {
                         this.setState({
