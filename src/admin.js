@@ -11,7 +11,7 @@ export default class Admin extends React.Component {
         return (
             <Row className="container">
                 <Col span="4" className="nav-left">
-                    <NavLeft/>
+                    <NavLeft />
                 </Col>
                 <Col span="20" className="main">
                     <Header>
@@ -19,9 +19,11 @@ export default class Admin extends React.Component {
                     </Header>
                     <Row className="content">
                         {/* <Home /> */}
-                        {this.props.children}
+                        <Col span="24">
+                            {this.props.children}
+                        </Col>
                     </Row>
-                    <Footer/>
+                    <Footer />
                 </Col>
             </Row>
         );
