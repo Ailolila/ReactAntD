@@ -10,6 +10,7 @@ import Loadings from './pages/ui/loadings';
 import Notice from './pages/ui/notice';
 import Messages from './pages/ui/messages';
 import Tabs from './pages/ui/tabs';
+import Gallery from './pages/ui/gallery';
 
 export default class IRouter extends React.Component {
 
@@ -29,6 +30,7 @@ export default class IRouter extends React.Component {
                                     <Route path="/ui/notification" component={Notice} />
                                     <Route path="/ui/messages" component={Messages} />
                                     <Route path="/ui/tabs" component={Tabs} />
+                                    <Route path="/ui/gallery" component={Gallery} />
                                     <Route component={NoMatch} />
                                 </Switch>
                             </Admin>
