@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Row, Col, Modal } from 'antd';
 
+import './ui.less';
+
 export default class Gallery extends React.Component {
 
     state = {
