@@ -36,7 +36,7 @@ export default class Child extends React.Component{
 
     render() {
         return <div>
-            <p>这里是子组件，测试子组件生命周期</p>
+            <p>这里是子组件，测试子组件生命周期</p>//测试下github名称变更
             <p>{this.props.name}</p>
         </div>
     }
