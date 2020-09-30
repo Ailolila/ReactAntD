@@ -7,7 +7,7 @@ const ShowMessage = (type) => {
     message[type]('恭喜 恭喜 恭喜你！！！');
 }
 
-export default class Message extends React.Component {
+export default class Messages extends React.Component {
 
     render() {
         return (
