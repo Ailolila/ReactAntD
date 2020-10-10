@@ -26,7 +26,7 @@ export default class Axios {
         //     loading.style.display = 'block';
         // }
         let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
-        let token = '3QShXbZ3ZGVzi2Yj';
+        //let token = '3QShXbZ3ZGVzi2Yj';
         return new Promise((resolve, reject) => {
             axios({
                 url: options.url,
@@ -34,9 +34,9 @@ export default class Axios {
                 baseURL: baseApi,
                 timeout: 5000,
                 params: (options.data && options.data.params) || '',
-                headers: {
-                    Appkey: token
-                }
+                // headers: {
+                //     Appkey: token
+                // }
             }).then((response) => {
                 debugger;
                 // if (options.data && options.data.isShowLoading !== false) {
