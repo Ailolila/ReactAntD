@@ -22,52 +22,66 @@ export default class Header extends React.Component {
     }
 
     getWeatherApiData() {
-        let city = "天津";
-        axios.jsonp({
-            url: "http://api.map.baidu.com/telematics/v3/weather?location=" + encodeURIComponent(city) + "&output=json&ak=3p49MVra6urFRGOT9s8UBWr2"
-            //url:"http://www.baidu.com"
-        }).then((res) => {
-            //debugger;
-            if (res.status == 'success') {
-                let data = res.results[0].weather_data[0];
-                this.setState({
-                    dayPictureUrl: data.dayPictureUrl,
-                    weather: data.weather
-                })
-            }
-        })
-
-        axios.ajax({
-            url: "/GetTest",
-            data: {
-                params: {
-
+        try {
+            let city = "天津";
+            axios.jsonp({
+                url: "http://api.map.baidu.com/telematics/v3/weather?location=" + encodeURIComponent(city) + "&output=json&ak=3p49MVra6urFRGOT9s8UBWr2"
+                //url:"http://www.baidu.com"
+            }).then((res) => {
+                //debugger;
+                if (res.status == 'success') {
+                    let data = res.results[0].weather_data[0];
+                    this.setState({
+                        dayPictureUrl: data.dayPictureUrl,
+                        weather: data.weather
+                    })
                 }
-            }
-        }).then((res) => {
-            debugger;
-            if (res.status == 'success') {
-                let data = res.results[0].weather_data[0];
-                this.setState({
-                    dayPictureUrl: data.dayPictureUrl,
-                    weather: data.weather
-                })
-            }
-        })
+            })
+        }
+        catch (errorInfo) {
+            console.log('Failed:', errorInfo);
+        }
 
-        let data = { "code": "1234", "name": "yyyy" };
-        axios.ajaxPost({
-            url: "/PostTest",
-            data: data
-        }).then((res) => {
-            if (res.ResultCode == '200') {
-                let data = res.ResultValue.Data[0];
-                this.setState({
-                    ActivityName: data.ActivityName
-                })
-            }
-        })
+        try {
+            axios.ajax({
+                url: "/GetTest",
+                data: {
+                    params: {
 
+                    }
+                }
+            }).then((res) => {
+                debugger;
+                if (res.status == 'success') {
+                    let data = res.results[0].weather_data[0];
+                    this.setState({
+                        dayPictureUrl: data.dayPictureUrl,
+                        weather: data.weather
+                    })
+                }
+            })
+        }
+        catch (errorInfo) {
+            console.log('Failed:', errorInfo);
+        }
+
+        try {
+            let data = { "code": "1234", "name": "yyyy" };
+            axios.ajaxPost({
+                url: "/PostTest",
+                data: data
+            }).then((res) => {
+                if (res.ResultCode == '200') {
+                    let data = res.ResultValue.Data[0];
+                    this.setState({
+                        ActivityName: data.ActivityName
+                    })
+                }
+            })
+        }
+        catch (errorInfo) {
+            console.log('Failed:', errorInfo);
+        }
     }
 
     render() {

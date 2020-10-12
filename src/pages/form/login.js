@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Button, Card, Select } from 'antd'
+import { Form, Input, Button, Card, Select, message, Checkbox, Col, Row } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const FormItem = Form.Item;
@@ -23,7 +23,7 @@ class FormLogin extends React.Component {
                         </FormItem>
                     </Form>
                 </Card>
-                <Card title="登录行内表单" style={{ marginTop: 10 }}>
+                <Card title="登录平行表单" style={{ marginTop: 10 }}>
                     <NormalLoginForm />
                 </Card>
             </div>
@@ -34,6 +34,7 @@ class FormLogin extends React.Component {
 
 const NormalLoginForm = () => {
     const formRef = React.createRef();
+    const [form] = Form.useForm();
 
     const onFinish = values => {//提交表单且数据验证成功后回调事件
         console.log('Received values of form: ', values);
@@ -54,7 +55,10 @@ const NormalLoginForm = () => {
 
     const onCheck = async () => {
         try {
-            const aa = formRef.current.getFieldValue('username');
+            let aa = formRef.current.getFieldValue('username');
+            await form.validateFields();
+            debugger;
+            message.success(`${aa}通过验证`);
             console.log('Success:', aa);
         } catch (errorInfo) {
             console.log('Failed:', errorInfo);
@@ -63,11 +67,13 @@ const NormalLoginForm = () => {
 
     return (
         <Form
+            form={form}
             ref={formRef}
             style={{ width: 300 }}
             onFinish={onFinish} className="login-form"
             initialValues={{
                 username: 'admin',//默认值
+                remember: true
             }}
         >
             <FormItem
@@ -80,7 +86,7 @@ const NormalLoginForm = () => {
                 ]}
             >
                 <Input
-                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    prefix={<UserOutlined />}
                     placeholder="用户名"
                 />
             </FormItem>
@@ -99,6 +105,24 @@ const NormalLoginForm = () => {
                     placeholder="密码"
                 />
             </FormItem>
+
+            <Row>
+                <Col span={12}>
+                    <FormItem
+                        name="remember"
+                        valuePropName="checked"
+                    >
+                        <Checkbox>记住密码</Checkbox>
+                    </FormItem>
+                </Col>
+                <Col span={12} style={{ textAlign: "right" }}>
+                    <FormItem
+                    >
+                        <a href="#">忘记密码</a>
+                    </FormItem>
+                </Col>
+            </Row>
+
             <FormItem
                 name="gender"
                 label="Gender"
@@ -126,7 +150,7 @@ const NormalLoginForm = () => {
                     Fill form
                 </Button>
                 <Button type="link" htmlType="button" onClick={onCheck}>
-                onCheck
+                    onCheck
                 </Button>
             </FormItem>
         </Form>
