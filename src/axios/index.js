@@ -23,12 +23,13 @@ export default class Axios {
     }
 
     static ajax(options) {
-        // let loading;
-        // if (options.data && options.data.isShowLoading !== false){
-        //     loading = document.getElementById('ajaxLoading');
-        //     loading.style.display = 'block';
-        // }
-        let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
+        let loading;
+        if (options.data && options.data.isShowLoading !== false){
+            loading = document.getElementById('ajaxLoading');
+            loading.style.display = 'block';
+        }
+        //let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
+        let baseApi = 'https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api';
         //let token = '3QShXbZ3ZGVzi2Yj';
         return new Promise((resolve, reject) => {
             axios({
@@ -42,10 +43,10 @@ export default class Axios {
                 // }
             }).then((response) => {
                 debugger;
-                // if (options.data && options.data.isShowLoading !== false) {
-                //     loading = document.getElementById('ajaxLoading');
-                //     loading.style.display = 'none';
-                // }
+                if (options.data && options.data.isShowLoading !== false) {
+                    loading = document.getElementById('ajaxLoading');
+                    loading.style.display = 'none';
+                }
                 if (response.status == '200') {
                     let res = response.data;
                     if (res.code == '0') {

@@ -49,6 +49,7 @@ export default class Header extends React.Component {
                     params: {
 
                     }
+                    , isShowLoading: false
                 }
             }).then((res) => {
                 debugger;
