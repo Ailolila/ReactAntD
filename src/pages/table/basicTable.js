@@ -64,7 +64,7 @@ export default class BasicTable extends React.Component {
                 params: {
                     page: this.params.page
                 },
-                isShowLoading: false
+                isShowLoading: true
             }
         }).then((res) => {
             if (res.code == 0) {
@@ -236,7 +236,7 @@ export default class BasicTable extends React.Component {
                         pagination={false}
                     />
                 </Card>
-                <Card title="Mock-单选" style={{ margin: '10px 0' }}>
+                <Card title="Mock-复选" style={{ margin: '10px 0' }}>
                     <div style={{ marginBottom: 10 }}>
                         <Button onClick={this.handleDelete}>删除</Button>
                     </div>
