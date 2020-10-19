@@ -53,6 +53,8 @@ export default class City extends React.Component {
 
     render() {
 
+        const formRef = React.createRef();
+
         const formItemLayout = {
             labelCol: {
                 span: 5
@@ -157,72 +159,26 @@ export default class City extends React.Component {
             );
         }
 
-        const OpenCityForm = () => {
-
-            const formRef = React.createRef();
-            const [form] = Form.useForm();
-
-            // 城市开通提交
-            const handleSubmit = () => {
-                let cityInfo = formRef.current.getFieldValue();
-                debugger;
-                console.log(cityInfo);
-                axios.ajax({
-                    url: '/city/open',
-                    data: {
-                        params: cityInfo
-                    }
-                }).then((res) => {
-                    if (res.code == '0') {
-                        message.success('开通成功');
-                        this.setState({
-                            isShowOpenCity: false
-                        })
-                        this.requestList();
-                    }
-                })
-            }
-
-            return (
-                <Modal
-                    title="开通城市"
-                    visible={this.state.isShowOpenCity}
-                    onCancel={() => {
-                        this.setState({
-                            isShowOpenCity: false
-                        })
-                    }}
-                    onOk={handleSubmit}
-                >
-                    {/* <OpenCityForm wrappedComponentRef={(inst) => { this.cityForm = inst; }} /> */}
-                    <Form
-                        layout="horizontal"
-                        form={form}
-                        ref={formRef}>
-                        <FormItem label="选择城市" {...formItemLayout}>
-                            <Select style={{ width: 100 }}>
-                                <Option value="">全部</Option>
-                                <Option value="1">北京市</Option>
-                                <Option value="2">天津市</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem name="yy" label="营运模式" {...formItemLayout}>
-                            <Select style={{ width: 100 }}>
-                                <Option value="1">自营</Option>
-                                <Option value="2">加盟</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="用车模式" {...formItemLayout}>
-                            <Select style={{ width: 100 }}>
-                                <Option value="1">指定停车点</Option>
-                                <Option value="2">禁停区</Option>
-                            </Select>
-                        </FormItem>
-                    </Form>
-                </Modal>
-            );
+        // 城市开通提交
+        const handleSubmit = () => {
+            let cityInfo = formRef.current.getFieldValue();
+            console.log(cityInfo);
+            axios.ajax({
+                url: '/city/open',
+                data: {
+                    params: cityInfo
+                }
+            }).then((res) => {
+                if (res.code == '0') {
+                    message.success('开通成功');
+                    this.setState({
+                        isShowOpenCity: false
+                    })
+                    this.requestList();
+                }
+            })
         }
-        
+
         return (
             <div>
                 <Card>
@@ -239,7 +195,85 @@ export default class City extends React.Component {
                         pagination={this.state.pagination}
                     />
                 </div>
-                <OpenCityForm />
+                <Modal
+                    title="开通城市"
+                    visible={this.state.isShowOpenCity}
+                    onCancel={() => {
+                        this.setState({
+                            isShowOpenCity: false
+                        })
+                    }}
+                    onOk={handleSubmit}
+                >
+                    <OpenCityForm formR={formRef} itemlayou = {formItemLayout} />
+
+                </Modal>
+                <UserForm itemlayou = {formItemLayout} userInfo="111" type={this.state.type} />
+            </div>
+        );
+    }
+}
+
+class OpenCityForm extends React.Component {
+    render() {
+        //const formRef = React.createRef();
+        return (
+            <Form
+                layout="horizontal"
+                ref={this.props.formR}
+                initialValues={{
+                    city: "1",//默认值
+                }}
+            >
+                <FormItem label="选择城市" name="city" {...this.props.itemlayou}>
+                    <Select style={{ width: 100 }}>
+                        <Option value="">全部</Option>
+                        <Option value="1">北京市</Option>
+                        <Option value="2">天津市</Option>
+                    </Select>
+                </FormItem>
+                <FormItem name="op_mode" label="营运模式" {...this.props.itemlayou}>
+                    <Select style={{ width: 100 }}>
+                        <Option value="1">自营</Option>
+                        <Option value="2">加盟</Option>
+                    </Select>
+                </FormItem>
+                <FormItem name="use_mode" label="用车模式" {...this.props.itemlayou}>
+                    <Select style={{ width: 100 }}>
+                        <Option value="1">指定停车点</Option>
+                        <Option value="2">禁停区</Option>
+                    </Select>
+                </FormItem>
+            </Form>
+        );
+    }
+}
+
+class UserForm extends React.Component {
+    render() {
+        message.info(this.props.userInfo)
+        console.log("form:" + this.userInfo);
+
+        const formRef = React.createRef();
+        //const [form2] = Form.useForm();
+
+        const handleSubmit1 = () => {
+            let cityInfo = formRef.current.getFieldValue("aab");
+            console.log("cityinfo:" + cityInfo);
+        }
+
+        return (
+            <div>
+                <Form ref={formRef}>
+                    <FormItem label="用车模式" name="aab">
+                        <Select style={{ width: 100 }}>
+                            <Option value="">全部</Option>
+                            <Option value="1">指定停车点</Option>
+                            <Option value="2">禁停区</Option>
+                        </Select>
+                    </FormItem>
+                    <Button type="primary" onClick={handleSubmit1}>开通城市</Button>
+                </Form>
             </div>
         );
     }
