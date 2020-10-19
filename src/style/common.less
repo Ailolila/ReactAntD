@@ -1,6 +1,17 @@
 @import './default.less';
 @import './loading.less';
 
+ul,li{
+    list-style: none;
+}
+.clearfix{
+    &::after{
+        content:' ';
+        clear:both;
+        display: block;
+        visibility: hidden;
+    }
+}
 .container{
     display: flex;
     .nav-left{
@@ -31,5 +42,11 @@
     .ant-table-wrapper {
         margin-left: -1 !important;
         margin-right: -2 !important;
+    }
+}
+
+.ant-card{
+    button{
+        margin-right: 10px;
     }
 }

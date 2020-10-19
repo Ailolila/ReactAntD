@@ -252,7 +252,6 @@ class OpenCityForm extends React.Component {
 class UserForm extends React.Component {
     render() {
         message.info(this.props.userInfo)
-        console.log("form:" + this.userInfo);
 
         const formRef = React.createRef();
         //const [form2] = Form.useForm();
