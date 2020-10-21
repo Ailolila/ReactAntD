@@ -1,8 +1,32 @@
-import JsonP from 'jsonp'
-import axios from 'axios'
-import { Modal } from 'antd'
+import JsonP from 'jsonp';
+import axios from 'axios';
+import { Modal } from 'antd';
+import Utils from './../utils/util';
 
 export default class Axios {
+    static requestList(_this, url, params) {
+        var data = {
+            params: params
+        }
+        this.ajax({
+            url,
+            data
+        }).then((data) => {
+            if (data && data.result) {
+                let list = data.result.item_list.map((item, index) => {
+                    item.key = index;
+                    return item;
+                });
+                _this.setState({
+                    list,
+                    pagination: Utils.pagination(data, (current) => {
+                        _this.params.page = current;
+                        _this.requestList();
+                    })
+                })
+            }
+        });
+    }
     static jsonp(options) {
         try {
             return new Promise((resolve, reject) => {
@@ -24,7 +48,7 @@ export default class Axios {
 
     static ajax(options) {
         let loading;
-        if (options.data && options.data.isShowLoading !== false){
+        if (options.data && options.data.isShowLoading !== false) {
             loading = document.getElementById('ajaxLoading');
             loading.style.display = 'block';
         }

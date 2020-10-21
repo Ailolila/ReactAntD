@@ -1,10 +1,8 @@
 import React from 'react';
-import { Card, Button, Table, Form, Select, Modal, message, DatePicker } from 'antd';
+import { Card, Button, Table, Form, Select, Modal } from 'antd';
 import axios from './../../axios/index';
 import Utils from './../../utils/util';
-
-const FormItem = Form.Item;
-const { Option } = Select;
+import BaseForm from '../../components/BaseForm';
 
 export default class Order extends React.Component {
 
@@ -14,33 +12,59 @@ export default class Order extends React.Component {
         page: 1
     }
 
+    formList = [
+        {
+            type: 'SELECT',
+            label: '城市',
+            field: 'city',
+            placeholder: '全部',
+            initialValue: '1',
+            width: 80,
+            list: [{ id: '0', name: '全部' }, { id: '1', name: '北京' }, { id: '2', name: '天津' }, { id: '3', name: '上海' }]
+        },
+        {
+            type: 'INPUT',
+            label: '模式',
+            field: 'model',
+            placeholder: '模式',
+            width: 80
+        },
+        {
+            type: '时间查询',
+            label: '订单时间',
+            field: 'order'
+        },
+        {
+            type: 'CHECKBOX',
+            label: '是否角色',
+            initialValue: true,
+            field: 'isRole'
+        },
+        {
+            type: 'SELECT',
+            label: '订单状态',
+            field: 'order_status',
+            placeholder: '全部',
+            initialValue: '0',
+            width: 80,
+            list: [{ id: '0', name: '全部' }, { id: '1', name: '进行中' }, { id: '2', name: '结束行程' }]
+        }
+    ]
+
     componentDidMount() {
+        this.requestList();
+    }
+
+    handleFilter = (params) => {
+        this.params = params;
+        console.log(this.params);
         this.requestList();
     }
 
     // 默认请求我们的接口数据
     requestList = () => {
         let _this = this;
-        axios.ajax({
-            url: '/order/list',
-            data: {
-                params: {
-                    page: this.params.page
-                }
-            }
-        }).then((res) => {
-            let list = res.result.item_list.map((item, index) => {
-                item.key = index;
-                return item;
-            });
-            this.setState({
-                list: list,
-                pagination: Utils.pagination(res, (current) => {
-                    _this.params.page = current;
-                    _this.requestList();
-                })
-            })
-        })
+        axios.requestList(this, '/order/list', this.params)；
     }
 
     onRowClick = (record, index) => {
@@ -51,7 +75,7 @@ export default class Order extends React.Component {
         })
     }
 
-    openOrderDetail = ()=>{
+    openOrderDetail = () => {
         let item = this.state.selectedItem;
         if (!item) {
             Modal.info({
@@ -60,10 +84,12 @@ export default class Order extends React.Component {
             })
             return;
         }
-        window.open(`/#/common/order/detail/${item.id}`,'_blank')
+        window.open(`/#/common/order/detail/${item.id}`, '_blank')
     }
 
     render() {
+
+        const formRef = React.createRef();
 
         const columns = [
             {
@@ -116,7 +142,7 @@ export default class Order extends React.Component {
         ]
 
         const selectedRowKeys = this.state.selectedRowKeys;
-        
+
         const rowSelection = {
             type: 'radio',
             selectedRowKeys
@@ -125,7 +151,7 @@ export default class Order extends React.Component {
         return (
             <div>
                 <Card>
-                    <FilterForm />
+                    <BaseForm formR={formRef} formList={this.formList} filterSubmit={this.handleFilter} />
                 </Card>
                 <Card style={{ marginTop: 10 }}>
                     <Button onClick={this.openOrderDetail}>订单详情</Button>
@@ -154,55 +180,55 @@ export default class Order extends React.Component {
     }
 }
 
-class FilterForm extends React.Component {
+// class FilterForm extends React.Component {
 
-    render() {
-        return (
-            <Form layout="inline">
-                <FormItem label="城市">
-                    <Select
-                        style={{ width: 100 }}
-                        placeholder="全部"
-                    >
-                        <Option value="">全部</Option>
-                        <Option value="1">北京市</Option>
-                        <Option value="2">天津市</Option>
-                        <Option value="3">深圳市</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="订单时间" name="start_time">
-                    <DatePicker
-                        style={{ width: 240 }}
-                        placeholder="订单时间"
-                        showTime
-                        format="YYYY-MM-DD HH:mm:ss"
-                    >
-                    </DatePicker>
-                </FormItem>
-                <FormItem label="~" colon={false} name="ent_time">
-                    <DatePicker
-                        style={{ width: 240 }}
-                        placeholder="订单结束时间"
-                        showTime
-                        format="YYYY-MM-DD HH:mm:ss"
-                    >
-                    </DatePicker>
-                </FormItem>
-                <FormItem label="状态">
-                    <Select
-                        style={{ width: 100 }}
-                        placeholder="全部"
-                    >
-                        <Option value="">全部</Option>
-                        <Option value="1">进行中</Option>
-                        <Option value="2">结束行程</Option>
-                    </Select>
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" style={{ margin: '0 20px' }}>查询</Button>
-                    <Button>重置</Button>
-                </FormItem>
-            </Form>
-        );
-    }
-}
+//     render() {
+//         return (
+//             <Form layout="inline">
+//                 <FormItem label="城市">
+//                     <Select
+//                         style={{ width: 100 }}
+//                         placeholder="全部"
+//                     >
+//                         <Option value="">全部</Option>
+//                         <Option value="1">北京市</Option>
+//                         <Option value="2">天津市</Option>
+//                         <Option value="3">深圳市</Option>
+//                     </Select>
+//                 </FormItem>
+//                 <FormItem label="订单时间" name="start_time">
+//                     <DatePicker
+//                         style={{ width: 240 }}
+//                         placeholder="订单时间"
+//                         showTime
+//                         format="YYYY-MM-DD HH:mm:ss"
+//                     >
+//                     </DatePicker>
+//                 </FormItem>
+//                 <FormItem label="~" colon={false} name="ent_time">
+//                     <DatePicker
+//                         style={{ width: 240 }}
+//                         placeholder="订单结束时间"
+//                         showTime
+//                         format="YYYY-MM-DD HH:mm:ss"
+//                     >
+//                     </DatePicker>
+//                 </FormItem>
+//                 <FormItem label="状态">
+//                     <Select
+//                         style={{ width: 100 }}
+//                         placeholder="全部"
+//                     >
+//                         <Option value="">全部</Option>
+//                         <Option value="1">进行中</Option>
+//                         <Option value="2">结束行程</Option>
+//                     </Select>
+//                 </FormItem>
+//                 <FormItem>
+//                     <Button type="primary" style={{ margin: '0 20px' }}>查询</Button>
+//                     <Button>重置</Button>
+//                 </FormItem>
+//             </Form>
+//         );
+//     }
+// }
