@@ -64,7 +64,7 @@ export default class Order extends React.Component {
     // 默认请求我们的接口数据
     requestList = () => {
         let _this = this;
-        axios.requestList(this, '/order/list', this.params)；
+        axios.requestList(this, '/order/list', this.params)
     }
 
     onRowClick = (record, index) => {
