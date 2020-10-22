@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Button, Table, Form, Select, Modal } from 'antd';
 import axios from './../../axios/index';
-import Utils from './../../utils/util';
 import BaseForm from '../../components/BaseForm';
 
 export default class Order extends React.Component {

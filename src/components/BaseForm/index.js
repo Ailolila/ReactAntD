@@ -40,7 +40,7 @@ export default class FilterForm extends React.Component {
                 } else if (item.type == 'INPUT') {
                     const INPUT = <FormItem label={label} key={field} initialValue={initialValue} name={field}>
                         {
-                            <Input type="text" placeholder={placeholder} />
+                            <Input type="text" style={{ width: width }} placeholder={placeholder} />
                         }
                     </FormItem>;
                     formItemList.push(INPUT)
@@ -65,6 +65,13 @@ export default class FilterForm extends React.Component {
                         }
                     </FormItem>;
                     formItemList.push(CHECKBOX)
+                } else if (item.type == 'DATEPICKER') {
+                    const DATEPICKER = <FormItem label={label} key={field} initialValue={initialValue} name={field}>
+                        {
+                            <DatePicker style={{ width: width }} showTime={true} placeholder={placeholder} format="YYYY-MM-DD" />
+                        }
+                    </FormItem>;
+                    formItemList.push(DATEPICKER)
                 }
             })
         }
