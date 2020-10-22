@@ -1,9 +1,13 @@
 import React from 'react';
-import { Card, Button } from 'antd';
+import { Card, Button, Form, Input, Select, Radio, Modal, DatePicker } from 'antd'
 import axios from './../../axios/index';
 import ETable from './../../components/ETable/index';
 import BaseForm from './../../components/BaseForm/index';
-import util from './../../utils/util';
+import Utils from './../../utils/util';
+import Moment from 'moment'
+const FormItem = Form.Item;
+const Option = Select.Option;
+const RadioGroup = Radio.Group;
 
 export default class User extends React.Component {
 
@@ -41,11 +45,87 @@ export default class User extends React.Component {
         this.requestList();
     }
 
-    componentWillUnmount = () => {
-        this.setState = (state, callback) => {
-            return;
-        };
+    // 操作员工
+    handleOperator = (type) => {
+        let item = this.state.selectedItem;
+        if (type == 'create') {
+            this.setState({
+                title: '创建员工',
+                isVisible: true,
+                type
+            })
+        } else if (type == "edit" || type == 'detail') {
+            if (!item) {
+                Modal.info({
+                    title: '信息',
+                    content: '请选择一个用户'
+                })
+                return;
+            }
+            this.setState({
+                title: type == 'edit' ? '编辑用户' : '查看详情',
+                isVisible: true,
+                userInfo: item,
+                type
+            })
+        } else if (type == "delete") {
+            if (!item) {
+                Modal.info({
+                    title: '信息',
+                    content: '请选择一个用户'
+                })
+                return;
+            }
+            let _this = this;
+            Modal.confirm({
+                title: '确认删除',
+                content: `是否要删除当前选中的员工${item.id}`,
+                onOk() {
+                    axios.ajax({
+                        url: '/user/delete',
+                        data: {
+                            params: {
+                                id: item.id
+                            }
+                        }
+                    }).then((res) => {
+                        if (res.code === 0) {
+                            _this.setState({
+                                isVisible: false
+                            })
+                            _this.requestList();
+                        }
+                    })
+                }
+            })
+            // Utils.ui.confirm({
+            //     text: '确定要删除此用户吗？',
+            //     onOk: () => {
+            //         axios.ajax({
+            //             url: '/user/delete',
+            //             data: {
+            //                 params: {
+            //                     id: item.id
+            //                 }
+            //             }
+            //         }).then((res) => {
+            //             if (res.code == 0) {
+            //                 this.setState({
+            //                     isVisible: false
+            //                 })
+            //                 this.requestList();
+            //             }
+            //         })
+            //     }
+            // })
+        }
     }
+
+    // componentWillUnmount = () => {
+    //     this.setState = (state, callback) => {
+    //         return;
+    //     };
+    // }
 
     handleFilter = (params) => {
         this.params = params;
@@ -57,7 +137,6 @@ export default class User extends React.Component {
         let _this = this;
         axios.requestList(this, '/user/list', this.params)
     }
-
     render() {
 
         const formRef = React.createRef();
@@ -120,27 +199,130 @@ export default class User extends React.Component {
         }
         ]
 
+        const handleSubmit = () => {
+            let type = this.state.type;
+            let data = formRef.current.getFieldsValue();
+            axios.ajax({
+                url: type == 'create' ? '/user/add' : '/user/edit',
+                data: {
+                    params: {
+                        ...data
+                    }
+                }
+            }).then((res) => {
+                if (res.code == 0) {
+                    this.setState({
+                        isVisible: false
+                    })
+                    this.requestList();
+                }
+            })
+        }
+
         return (
             <div>
                 <Card>
                     <BaseForm formR={formRef} formList={this.formList} filterSubmit={this.handleFilter} />
                 </Card>
                 <Card style={{ marginTop: 10 }}>
-                    <Button onClick={this.openOrderDetail}>订单详情</Button>
-                    <Button>结束订单</Button>
+                    <Button type="primary" icon="plus" onClick={() => this.handleOperator('create')}>创建员工</Button>
+                    <Button icon="edit" onClick={() => this.handleOperator('edit')}>编辑员工</Button>
+                    <Button onClick={() => this.handleOperator('detail')}>员工详情</Button>
+                    <Button type="danger" icon="delete" onClick={() => this.handleOperator('delete')}>删除员工</Button>
                 </Card>
                 <div className="content-warp">
                     <ETable
-                        updateSelectedItem={util.updateSelectedItem.bind(this)}
+                        updateSelectedItem={Utils.updateSelectedItem.bind(this)}
                         columns={columns}
                         dataSource={this.state.list}
                         selectedRowKeys={this.state.selectedRowKeys}
-                        // selectedIds={this.state.selectedIds}
-                        //selectedItem={this.state.selectedItem}
+                        //selectedIds={this.state.selectedIds}
+                        selectedItem={this.state.selectedItem}
                         pagination={this.state.pagination}//{false}
                     />
                 </div>
+                <Modal
+                    title={this.state.title}
+                    visible={this.state.isVisible}
+                    onOk={handleSubmit}
+                    width={800}
+                    onCancel={() => {
+                        formRef.current.resetFields();
+                        this.setState({
+                            isVisible: false,
+                            userInfo: ''
+                        })
+                    }}
+                >
+                    <UserForm formR={formRef} userInfo={this.state.userInfo} type={this.state.type} />
+                </Modal>
             </div>
+        );
+    }
+}
+
+class UserForm extends React.Component {
+
+    getState = (state) => {
+        return {
+            '1': '咸鱼一条',
+            '2': '风华浪子',
+            '3': '北大才子一枚',
+            '4': '百度FE',
+            '5': '创业者'
+        }[state]
+    }
+
+    render() {
+        const formItemLayout = {
+            labelCol: { span: 5 },
+            wrapperCol: { span: 16 }
+        };
+        const userInfo = this.props.userInfo || {};
+        const type = this.props.type;
+        return (
+            <Form layout="horizontal" ref={this.props.formR}>
+                <FormItem label="姓名" {...formItemLayout} name="user_name">
+                    {
+                        userInfo && type == 'detail' ? userInfo.username :
+
+                            <Input type="text" placeholder="请输入姓名" />
+                    }
+                </FormItem>
+                <FormItem label="性别" {...formItemLayout}>
+                    {
+                        userInfo && type == 'detail' ? userInfo.sex == 1 ? '男' : '女' :
+                            <RadioGroup>
+                                <Radio value={1}>男</Radio>
+                                <Radio value={2}>女</Radio>
+                            </RadioGroup>
+                    }
+                </FormItem>
+                <FormItem label="状态" {...formItemLayout}>
+                    {
+                        userInfo && type == 'detail' ? this.getState(userInfo.state) :
+                            <Select>
+                                <Option value={1}>咸鱼一条</Option>
+                                <Option value={2}>风华浪子</Option>
+                                <Option value={3}>北大才子一枚</Option>
+                                <Option value={4}>百度FE</Option>
+                                <Option value={5}>创业者</Option>
+                            </Select>
+                    }
+                </FormItem>
+                <FormItem label="生日" {...formItemLayout}>
+                    {
+                        userInfo && type == 'detail' ? userInfo.birthday :
+                            <DatePicker />
+                    }
+                </FormItem>
+                <FormItem label="联系地址" {...formItemLayout}>
+                    {
+                        userInfo && type == 'detail' ? userInfo.address :
+                            <Input.TextArea rows={3} placeholder="请输入联系地址" />
+                    }
+                </FormItem>
+            </Form>
         );
     }
 }

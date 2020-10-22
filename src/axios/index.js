@@ -66,7 +66,6 @@ export default class Axios {
                 //     Appkey: token
                 // }
             }).then((response) => {
-                debugger;
                 if (options.data && options.data.isShowLoading !== false) {
                     loading = document.getElementById('ajaxLoading');
                     loading.style.display = 'none';
