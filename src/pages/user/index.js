@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Button, Form, Input, Select, Radio, Modal, DatePicker } from 'antd'
+import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from './../../axios/index';
 import ETable from './../../components/ETable/index';
 import BaseForm from './../../components/BaseForm/index';
@@ -37,7 +38,7 @@ export default class User extends React.Component {
             label: '入职日期',
             field: 'user_date',
             placeholder: '请输入日期',
-            width: 80
+            width: 150
         }
     ]
 
@@ -233,10 +234,10 @@ export default class User extends React.Component {
                     <BaseForm formR={formRef} formList={this.formList} filterSubmit={this.handleFilter} />
                 </Card>
                 <Card style={{ marginTop: 10 }}>
-                    <Button type="primary" icon="plus" onClick={() => this.handleOperator('create')}>创建员工</Button>
-                    <Button icon="edit" onClick={() => this.handleOperator('edit')}>编辑员工</Button>
+                    <Button type="primary" icon={<PlusOutlined />} onClick={() => this.handleOperator('create')}>创建员工</Button>
+                    <Button icon={<EditOutlined />} onClick={() => this.handleOperator('edit')}>编辑员工</Button>
                     <Button onClick={() => this.handleOperator('detail')}>员工详情</Button>
-                    <Button type="danger" icon="delete" onClick={() => this.handleOperator('delete')}>删除员工</Button>
+                    <Button type="danger" icon={<DeleteOutlined />} onClick={() => this.handleOperator('delete')}>删除员工</Button>
                 </Card>
                 <div className="content-warp">
                     <ETable
@@ -255,10 +256,7 @@ export default class User extends React.Component {
                     onOk={handleSubmit}
                     width={800}
                     onCancel={() => {
-                        formRef.current.resetFields();
-                        // formRef.current.setFieldsValue({
-                        //     userInfo:{}
-                        // });
+                        // formRef.current.resetFields();
                         this.setState({
                             isVisible: false,
                             userInfo: ''
@@ -301,7 +299,7 @@ class UserForm extends React.Component {
                 initialValues={
                     {
                         "user_name": userInfo.username,
-                        "sex": userInfo.sex,
+                        "sex": userInfo.sex || 1,
                         "state": userInfo.state,
                         "birthday": Moment(userInfo.birthday),
                         "address": userInfo.address
