@@ -212,11 +212,19 @@ export default class User extends React.Component {
             }).then((res) => {
                 if (res.code == 0) {
                     this.setState({
-                        isVisible: false
+                        isVisible: false,
+                        userInfo: ''
                     })
                     this.requestList();
                 }
             })
+        }
+
+        let footer = {};
+        if (this.state.type == 'detail') {
+            footer = {
+                footer: null
+            }
         }
 
         return (
@@ -248,11 +256,16 @@ export default class User extends React.Component {
                     width={800}
                     onCancel={() => {
                         formRef.current.resetFields();
+                        // formRef.current.setFieldsValue({
+                        //     userInfo:{}
+                        // });
                         this.setState({
                             isVisible: false,
                             userInfo: ''
                         })
                     }}
+                    destroyOnClose
+                    {...footer}
                 >
                     <UserForm formR={formRef} userInfo={this.state.userInfo} type={this.state.type} />
                 </Modal>
@@ -274,6 +287,7 @@ class UserForm extends React.Component {
     }
 
     render() {
+
         const formItemLayout = {
             labelCol: { span: 5 },
             wrapperCol: { span: 16 }
@@ -281,7 +295,19 @@ class UserForm extends React.Component {
         const userInfo = this.props.userInfo || {};
         const type = this.props.type;
         return (
-            <Form layout="horizontal" ref={this.props.formR}>
+            <Form
+                layout="horizontal"
+                ref={this.props.formR}
+                initialValues={
+                    {
+                        "user_name": userInfo.username,
+                        "sex": userInfo.sex,
+                        "state": userInfo.state,
+                        "birthday": Moment(userInfo.birthday),
+                        "address": userInfo.address
+                    }
+                }
+            >
                 <FormItem label="姓名" {...formItemLayout} name="user_name">
                     {
                         userInfo && type == 'detail' ? userInfo.username :
@@ -289,7 +315,7 @@ class UserForm extends React.Component {
                             <Input type="text" placeholder="请输入姓名" />
                     }
                 </FormItem>
-                <FormItem label="性别" {...formItemLayout}>
+                <FormItem label="性别" {...formItemLayout} name="sex">
                     {
                         userInfo && type == 'detail' ? userInfo.sex == 1 ? '男' : '女' :
                             <RadioGroup>
@@ -298,7 +324,7 @@ class UserForm extends React.Component {
                             </RadioGroup>
                     }
                 </FormItem>
-                <FormItem label="状态" {...formItemLayout}>
+                <FormItem label="状态" {...formItemLayout} name="state">
                     {
                         userInfo && type == 'detail' ? this.getState(userInfo.state) :
                             <Select>
@@ -310,13 +336,13 @@ class UserForm extends React.Component {
                             </Select>
                     }
                 </FormItem>
-                <FormItem label="生日" {...formItemLayout}>
+                <FormItem label="生日" {...formItemLayout} name="birthday">
                     {
                         userInfo && type == 'detail' ? userInfo.birthday :
                             <DatePicker />
                     }
                 </FormItem>
-                <FormItem label="联系地址" {...formItemLayout}>
+                <FormItem label="联系地址" {...formItemLayout} name="address">
                     {
                         userInfo && type == 'detail' ? userInfo.address :
                             <Input.TextArea rows={3} placeholder="请输入联系地址" />
