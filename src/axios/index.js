@@ -52,7 +52,9 @@ export default class Axios {
             loading = document.getElementById('ajaxLoading');
             loading.style.display = 'block';
         }
+        //fastmock
         let baseApi = 'https://www.fastmock.site/mock/41e1e11d4a3ce03eed160b62ced5be56/imoocmanager';
+        //easymock
         //let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
         //let baseApi = 'https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api';
         //let token = '3QShXbZ3ZGVzi2Yj';
