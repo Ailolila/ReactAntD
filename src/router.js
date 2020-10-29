@@ -21,6 +21,8 @@ import Order from './pages/order/index';
 import OrderDetail from './pages/order/detail';
 import Common from './common';
 import User from './pages/user/index';
+import BikeMap from './pages/map/bikeMap';
+import Permission from './pages/permission';
 
 export default class IRouter extends React.Component {
 
@@ -54,7 +56,9 @@ export default class IRouter extends React.Component {
                                     <Route path="/table/high" component={HighTable} />
                                     <Route path="/city" component={City} />
                                     <Route path="/order" component={Order} />
-                                    <Route path="/user" component={User} />
+                                    <Route path="/user" component={User} />bikeMap
+                                    <Route path="/bikeMap" component={BikeMap} />
+                                    <Route path="/permission" component={Permission} />
                                     <Route component={NoMatch} />
                                 </Switch>
                             </Admin>

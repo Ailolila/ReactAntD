@@ -44,6 +44,18 @@ export default class FilterForm extends React.Component {
                         }
                     </FormItem>;
                     formItemList.push(INPUT)
+                } else if (item.type == '城市') {
+                    const INPUT = <FormItem label={label} key={field} initialValue={initialValue} name={field}>
+                        {
+                            <Select
+                                style={{ width: width }}
+                                placeholder={placeholder}
+                            >
+                                {Utils.getOptionList([{ id: '0', name: '全部' }, { id: '1', name: '北京' }, { id: '2', name: '天津' }])}
+                            </Select>
+                        }
+                    </FormItem>;
+                    formItemList.push(INPUT)
                 } else if (item.type == 'SELECT') {
                     const SELECT = <FormItem label={label} key={field} initialValue={initialValue} name={field}>
                         {
