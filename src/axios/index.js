@@ -97,7 +97,8 @@ export default class Axios {
                 "Access-Control-Allow-Origin": "*",
             }
         };
-        let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
+        let baseApi = 'https://www.fastmock.site/mock/41e1e11d4a3ce03eed160b62ced5be56/imoocmanager';
+        //let baseApi = 'https://www.easy-mock.com/mock/5f6b1803dba12925bcd53529/imoocmanager';
         return new Promise((resolve, reject) => {
             //let data = { "code": "1234", "name": "yyyy" };
             axios.post(baseApi + options.url, options.data, axiosConfig)

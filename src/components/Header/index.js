@@ -42,29 +42,29 @@ export default class Header extends React.Component {
             console.log('Failed:', errorInfo);
         }
 
-        try {
-            axios.ajax({
-                url: "/GetTest",
-                data: {
-                    params: {
+        // try {
+        //     axios.ajax({
+        //         url: "/GetTest",
+        //         data: {
+        //             params: {
 
-                    }
-                    , isShowLoading: false
-                }
-            }).then((res) => {
-                debugger;
-                if (res.status == 'success') {
-                    let data = res.results[0].weather_data[0];
-                    this.setState({
-                        dayPictureUrl: data.dayPictureUrl,
-                        weather: data.weather
-                    })
-                }
-            })
-        }
-        catch (errorInfo) {
-            console.log('Failed:', errorInfo);
-        }
+        //             }
+        //             , isShowLoading: false
+        //         }
+        //     }).then((res) => {
+        //         debugger;
+        //         if (res.status == 'success') {
+        //             let data = res.results[0].weather_data[0];
+        //             this.setState({
+        //                 dayPictureUrl: data.dayPictureUrl,
+        //                 weather: data.weather
+        //             })
+        //         }
+        //     })
+        // }
+        // catch (errorInfo) {
+        //     console.log('Failed:', errorInfo);
+        // }
 
         try {
             let data = { "code": "1234", "name": "yyyy" };
@@ -73,6 +73,7 @@ export default class Header extends React.Component {
                 data: data
             }).then((res) => {
                 if (res.ResultCode == '200') {
+                    debugger;
                     let data = res.ResultValue.Data[0];
                     this.setState({
                         ActivityName: data.ActivityName
