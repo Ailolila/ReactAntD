@@ -1,8 +1,9 @@
 import React from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row, ConfigProvider } from 'antd';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import NavLeft from './components/NavLeft';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 import './style/common.less'
 
@@ -20,7 +21,9 @@ export default class Admin extends React.Component {
                     <Row className="content">
                         {/* <Home /> */}
                         <Col span="24">
-                            {this.props.children}
+                            <ConfigProvider locale={zhCN}>
+                                {this.props.children}
+                            </ConfigProvider>
                         </Col>
                     </Row>
                     <Footer />
