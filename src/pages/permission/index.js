@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Button, Form, Input, Select, Tree, Transfer, Modal } from 'antd';
 import axios from '../../axios/index';
 import ETable from '../../components/ETable/index';
-import menuConfig from '../../config/menuConfig';
+import menuConfig from '../../config/authMenuConfig';
 import Utils from '../../utils/util';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -279,6 +279,11 @@ class PermEditForm extends React.Component {
         };
         const detail_info = this.props.detailInfo;
         const menuInfo = this.props.menuInfo;
+
+        // const [expandedKeys, setExpandedKeys] = useState(detail_info);
+        // const [checkedKeys, setCheckedKeys] = useState(detail_info);
+        // const [selectedKeys, setSelectedKeys] = useState([]);
+        // const [autoExpandParent, setAutoExpandParent] = useState(true);
         return (
             <Form
                 ref={this.props.formR}
@@ -305,10 +310,11 @@ class PermEditForm extends React.Component {
                     defaultExpandAll
                     onCheck={(checkedKeys) => this.onCheck(checkedKeys)}
                     checkedKeys={menuInfo || []}
+                    treeData={menuConfig}
                 >
-                    <TreeNode title="平台权限" key="platform_all">
+                    {/* <TreeNode title="平台权限" key="platform_all">
                         {this.renderTreeNodes(menuConfig)}
-                    </TreeNode>
+                    </TreeNode> */}
                 </Tree>
             </Form>
         )
