@@ -21,6 +21,9 @@ yarn add less-loader@5.0.0
 yarn add antd
 yarn add jsonp --save
 yarn add moment --save
+yarn add redux --save
+yarn add react-redux --save    
+yarn add redux-devtools-extension
 
 5、常用记录
 Expected '===' and instead saw '==' 错误： 添加注释“//eslint-disable-line” 过滤

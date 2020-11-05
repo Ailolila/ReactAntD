@@ -1,5 +1,5 @@
 import 'core-js/es';
-import 'react-app-polyfill/ie9'; 
+import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -8,10 +8,17 @@ import './index.css';
 //import Admin from './admin';
 import Router from './router';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import configureStore from './redux/store/configureStore';
+
+const store = configureStore();
 
 ReactDOM.render(
   //<React.StrictMode>
-    <Router />,
+  <Provider store={store}>
+    <Router />
+  </Provider>
+  ,
   //</React.StrictMode>,
   document.getElementById('root')
 );

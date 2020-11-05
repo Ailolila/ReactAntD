@@ -4,10 +4,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import NavLeft from './components/NavLeft';
 import zhCN from 'antd/lib/locale/zh_CN';
+import { connect } from 'react-redux';
 
 import './style/common.less'
 
-export default class Admin extends React.Component {
+class Admin extends React.Component {
     render() {
         return (
             <Row className="container">
@@ -32,3 +33,5 @@ export default class Admin extends React.Component {
         );
     }
 }
+
+export default connect()(Admin)

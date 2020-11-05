@@ -1,6 +1,8 @@
 import React from 'react'
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { switchMenu } from './../../redux/action';
+import { connect } from 'react-redux';
 // import {
 //     MailOutlined,
 //     CalendarOutlined,
@@ -13,12 +15,32 @@ import MenuConfig from './../../config/menuConfig'
 
 const { SubMenu } = Menu;
 
-export default class NavLeft extends React.Component {
+class NavLeft extends React.Component {
+
+    state = {
+        currentKey: ''
+    }
+
+    // 菜单点击
+    handleClick = ({ item, key }) => {
+        if (key == this.state.currentKey) {
+            return false;
+        }
+        // 事件派发，自动调用reducer，通过reducer保存到store对象中
+        const { dispatch } = this.props;
+        dispatch(switchMenu(item.props.title));
+
+        this.setState({
+            currentKey: key
+        });
+        // hashHistory.push(key);
+    };
 
     componentWillMount() {
         const menuTreeNode = this.renderMenu(MenuConfig);
-
+        let currentKey = window.location.hash.replace(/#|\?.*$/g, '');
         this.setState({
+            currentKey,
             menuTreeNode
         })
     }
@@ -38,16 +60,26 @@ export default class NavLeft extends React.Component {
         })
     }
 
-
+    homeHandleClick = ({ item }) => {
+        const { dispatch } = this.props;
+        dispatch(switchMenu('首页'));
+        this.setState({
+            currentKey: ""
+        });
+    };
 
     render() {
         return (
             <div>
-                <div className="logo">
-                    <img src="/assets/logo-ant.svg" alt=""></img>
-                    <h1>React练级demo</h1>
-                </div>
+                <NavLink to="/home" onClick={this.homeHandleClick}>
+                    <div className="logo">
+                        <img src="/assets/logo-ant.svg" alt="" />
+                        <h1>React 练级 Demo</h1>
+                    </div>
+                </NavLink>
                 <Menu mode="inline" theme="dark" defaultSelectedKeys={['/']}
+                    onClick={this.handleClick}
+                    selectedKeys={[this.state.currentKey]}
                     defaultOpenKeys={['/ui']}>
                     {this.state.menuTreeNode}
                     {/* <SubMenu key="sub1" icon={<AppstoreOutlined />} title="导航一">
@@ -76,3 +108,5 @@ export default class NavLeft extends React.Component {
         );
     }
 }
+
+export default connect()(NavLeft)
